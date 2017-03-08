@@ -32,10 +32,6 @@ class HomeController {
 请输入你的选择（1～3）：
     `;
     rlModule.rl.question(response, (routeName) => {
-      this.dispatcher.dispatch({
-        route: routeName,
-        parameters: {}
-      });
       if (this.validateInputForHomePage(routeName)) {
         this.dispatcher.dispatch({
           route: routeName,
