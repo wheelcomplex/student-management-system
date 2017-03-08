@@ -5,7 +5,7 @@ class Dispatcher {
   constructor(routes, server){
     this.controllers = {
       homeController: new HomeControllerModule.HomeController(this),
-      studnentController: new StudentsControllerModule.StudentsController(this)
+      studentsController: new StudentsControllerModule.StudentsController(this)
     };
     this.routes = routes;
     this.server = server;
