@@ -1,20 +1,205 @@
-describe('studentsController', () => {
+const StudentsControllerModule = require('../src/studentsController');
+const StudentModule = require('../src/student');
+const rlModule = require('../src/io');
+
+describe('StudentsController', () => {
   beforeEach(() => {
-    this.studentController = new StudentController();
+    var dispatcher = {
+      dispatch: () => {}
+    };
+    this.studentsController = new StudentsControllerModule.StudentsController(dispatcher);
   });
 
-  it('GET #new should handle request to the new student page', () => {
-    var expectedResponse = `
-1. 添加学生
-2. 生成成绩单
-请输入你的选择（1～2）：
-    `;
-    expect(this.studentController.new({})).toBe(expectedResponse);
+  it('#newStudent should render the right response for the newStudent page', () => {
+    var expectedResponse = `请输入学生信息（格式：姓名, 学号, 民族, 班级, 学科: 成绩, ...），按回车提交：
+`;
+
+    spyOn(rlModule.rl, 'question');
+
+    this.studentsController.newStudent({});
+
+    expect(rlModule.rl.question).toHaveBeenCalledWith(expectedResponse, jasmine.any(Function));
   });
 
-  it('POST #create should handle request to the create student page', () => {
+  it('#newStudent should dispatch a request to the corresponding page when user input is valid', () => {
+    var studentString = {};
+
+    spyOn(StudentModule.Student, 'validateStudentString').and.callFake(() => {
+      return true;
+    });
+
+    spyOn(rlModule.rl, 'question').and.callFake((response, callback) => {
+      callback(studentString);
+    });
+
+    spyOn(this.studentsController.dispatcher, 'dispatch');
+
+    this.studentsController.newStudent({});
+
+    expect(this.studentsController.dispatcher.dispatch).toHaveBeenCalledWith({
+      route: '/students/create',
+      parameters: studentString
+    });
   });
 
-  it('GET #index should handle request to the students index page', () => {
+  it('#newStudent should dispatch a request to the newStudent page when user input is invalid', () => {
+    var studentString = {};
+
+    spyOn(StudentModule.Student, 'validateStudentString').and.callFake(() => {
+      return false;
+    });
+
+    spyOn(rlModule.rl, 'question').and.callFake((response, callback) => {
+      callback(studentString);
+    });
+
+    spyOn(this.studentsController.dispatcher, 'dispatch');
+
+    this.studentsController.newStudent({});
+
+    expect(this.studentsController.dispatcher.dispatch).toHaveBeenCalledWith({
+      route: '1',
+      parameters: {displayErrorMessage: true}
+    });
+  });
+
+  it('#create should render the right response', () => {
+    const expectedResponse = `学生{student.name}的成绩被添加
+`;
+    spyOn(console, 'log');
+    spyOn(StudentModule.Student, 'constructor').and.callFake(() => {
+      return {};
+    });
+    spyOn(this.dispatcher.server.studentsDB, 'push');
+    spyOn(this.studentsController.dispatcher, 'dispatch');
+
+    this.studentsController.create({});
+
+    expect(console.log).toHaveBeenCalledWith(expectedResponse);
+  });
+
+  it('#create should push a new student to studentsDB', () => {
+    spyOn(console, 'log');
+    spyOn(StudentModule.Student, 'constructor').and.callFake(() => {
+      return {};
+    });
+    spyOn(this.dispatcher.server.studentsDB, 'push');
+    spyOn(this.studentsController.dispatcher, 'dispatch');
+
+    this.studentsController.create({});
+
+    expect(this.dispatcher.server.studentsDB.push).toHaveBeenCalled();
+  });
+
+  it('#create should dispatch a request to the home index page', () => {
+    spyOn(console, 'log');
+    spyOn(StudentModule.Student, 'constructor').and.callFake(() => {
+      return {};
+    });
+    spyOn(this.dispatcher.server.studentsDB, 'push');
+    spyOn(this.studentsController.dispatcher, 'dispatch');
+
+    this.studentsController.create({});
+
+    expect(this.studentsController.dispatcher.dispatch).toHaveBeenCalledWith({
+      route: '/home',
+      parameters: {}
+    });
+  });
+  
+  it('#query should render the right response for the query page', () => {
+    var expectedResponse = `请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：
+`;
+
+    spyOn(rlModule.rl, 'question');
+
+    this.studentsController.query({});
+
+    expect(rlModule.rl.question).toHaveBeenCalledWith(expectedResponse, jasmine.any(Function));
+  });
+
+  it('#query should dispatch a request to the corresponding page when user input is valid', () => {
+    var studentString = {};
+
+    spyOn(StudentModule.Student, 'validateQueryString').and.callFake(() => {
+      return true;
+    });
+
+    spyOn(rlModule.rl, 'question').and.callFake((response, callback) => {
+      callback(studentString);
+    });
+
+    spyOn(this.studentsController.dispatcher, 'dispatch');
+
+    this.studentsController.query({});
+
+    expect(this.studentsController.dispatcher.dispatch).toHaveBeenCalledWith({
+      route: '/students',
+      parameters: studentString
+    });
+  });
+
+  it('#query should dispatch a request to the query page when user input is invalid', () => {
+    var studentString = {};
+
+    spyOn(StudentModule.Student, 'validateQueryString').and.callFake(() => {
+      return false;
+    });
+
+    spyOn(rlModule.rl, 'question').and.callFake((response, callback) => {
+      callback(studentString);
+    });
+
+    spyOn(this.studentsController.dispatcher, 'dispatch');
+
+    this.studentsController.query({});
+
+    expect(this.studentsController.dispatcher.dispatch).toHaveBeenCalledWith({
+      route: '2',
+      parameters: {displayErrorMessage: true}
+    });
+  });
+
+  xit('GET #index should handle request to the students index page', () => {
+  });
+
+
+
+
+
+  it('#index should render the right response', () => {
+    const expectedResponse = `成绩单
+姓名|数学|语文|英语|编程|平均分|总分 
+========================
+{students[0].name}|75|95|80|80|82.5|330
+李四|85|80|70|90|81.25|325
+========================
+全班总分平均数：xxx
+全班总分中位数：xxx`;
+
+    spyOn(console, 'log');
+    spyOn(StudentModule.Student, 'query').and.callFake(() => {
+      return [];
+    });
+    spyOn(this.studentsController.dispatcher, 'dispatch');
+
+    this.studentsController.index({});
+
+    expect(console.log).toHaveBeenCalledWith(expectedResponse);
+  });
+
+  it('#index should dispatch a request to the home index page', () => {
+    spyOn(console, 'log');
+    spyOn(StudentModule.Student, 'constructor').and.callFake(() => {
+      return [];
+    });
+    spyOn(this.studentsController.dispatcher, 'dispatch');
+
+    this.studentsController.index({});
+
+    expect(this.studentsController.dispatcher.dispatch).toHaveBeenCalledWith({
+      route: '/home',
+      parameters: {}
+    });
   });
 });

@@ -43,7 +43,7 @@ class StudentsController {
     });
   }
 
-query(parameters){
+  query(parameters){
     var normalResponse = `请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：
 `;
     var errorResponse = `请按正确的格式输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：
