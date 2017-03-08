@@ -1,24 +1,118 @@
-describe('homeController', () => {
+const HomeControllerModule = require('../src/homeController');
+const rlModule = require('../src/io');
+
+describe('HomeController', () => {
   beforeEach(() => {
-    this.homeController = new HomeController();
+    var dispatcher = {
+      dispatch: () => {}
+    };
+    this.homeController = new HomeControllerModule.HomeController(dispatcher);
   });
 
-  it('GET #root should handle request to the home root page', () => {
-    var expectedResponse = `
-1. 添加学生
+  it('#root should render the right response for the root page', () => {
+    var expectedResponse = `1. 添加学生
 2. 生成成绩单
 请输入你的选择（1～2）：
-    `;
-    expect(this.homeController.root({})).toBe(expectedResponse);
+`;
+
+    spyOn(rlModule.rl, 'question');
+
+    this.homeController.root({});
+
+    expect(rlModule.rl.question).toHaveBeenCalledWith(expectedResponse, jasmine.any(Function));
   });
 
-  it('GET #index should handle request to the home index page', () => {
-    var expectedResponse = `
-1. 添加学生
+  it('#root should dispatch a request to the corresponding page when user input is valid', () => {
+    var routeName = 'valid route name';
+
+    spyOn(this.homeController, 'validateInputForRootPage').and.callFake(() => {
+      return true;
+    });
+
+    spyOn(rlModule.rl, 'question').and.callFake((response, callback) => {
+      callback(routeName);
+    });
+
+    spyOn(this.homeController.dispatcher, 'dispatch');
+
+    this.homeController.root({});
+
+    expect(this.homeController.dispatcher.dispatch).toHaveBeenCalledWith({
+      route: routeName,
+      parameters: {}
+    });
+  });
+
+  it('#root should dispatch a request to the root page when user input is invalid', () => {
+    spyOn(this.homeController, 'validateInputForRootPage').and.callFake(() => {
+      return false;
+    });
+
+    spyOn(rlModule.rl, 'question').and.callFake((response, callback) => {
+      callback('invalid route name');
+    });
+
+    spyOn(this.homeController.dispatcher, 'dispatch');
+
+    this.homeController.root({});
+
+    expect(this.homeController.dispatcher.dispatch).toHaveBeenCalledWith({
+      route: '/',
+      parameters: {}
+    });
+  });
+
+  it('#index should render the right response for the index page', () => {
+    var expectedResponse = `1. 添加学生
 2. 生成成绩单
 3. 退出
 请输入你的选择（1～3）：
-    `;
-    expect(this.homeController.index({})).toBe(expectedResponse);
+`;
+
+    spyOn(rlModule.rl, 'question');
+
+    this.homeController.index({});
+
+    expect(rlModule.rl.question).toHaveBeenCalledWith(expectedResponse, jasmine.any(Function));
+  });
+
+  it('#index should dispatch a request to the corresponding page when user input is valid', () => {
+    var routeName = 'valid route name';
+
+    spyOn(this.homeController, 'validateInputForIndexPage').and.callFake(() => {
+      return true;
+    });
+
+    spyOn(rlModule.rl, 'question').and.callFake((response, callback) => {
+      callback(routeName);
+    });
+
+    spyOn(this.homeController.dispatcher, 'dispatch');
+
+    this.homeController.index({});
+
+    expect(this.homeController.dispatcher.dispatch).toHaveBeenCalledWith({
+      route: routeName,
+      parameters: {}
+    });
+  });
+
+  it('#index should dispatch a request to the index page when user input is invalid', () => {
+    spyOn(this.homeController, 'validateInputForIndexPage').and.callFake(() => {
+      return false;
+    });
+
+    spyOn(rlModule.rl, 'question').and.callFake((response, callback) => {
+      callback('invalid route name');
+    });
+
+    spyOn(this.homeController.dispatcher, 'dispatch');
+
+    this.homeController.index({});
+
+    expect(this.homeController.dispatcher.dispatch).toHaveBeenCalledWith({
+      route: '/home',
+      parameters: {}
+    });
   });
 });

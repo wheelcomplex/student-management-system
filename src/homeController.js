@@ -32,7 +32,7 @@ class HomeController {
 请输入你的选择（1～3）：
 `;
     rlModule.rl.question(response, (routeName) => {
-      if (this.validateInputForHomePage(routeName)) {
+      if (this.validateInputForIndexPage(routeName)) {
         this.dispatcher.dispatch({
           route: routeName,
           parameters: {}
@@ -54,7 +54,7 @@ class HomeController {
     return /^[12]$/.test(routeName);
   }
 
-  validateInputForHomePage(routeName) {
+  validateInputForIndexPage(routeName) {
     return /^[123]$/.test(routeName);
   }
 }
