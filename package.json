@@ -4,17 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine JASMINE_CONFIG_PATH=spec/support/jasmine.json",
-    "build": "babel src -d lib"
+    "test": "jasmine JASMINE_CONFIG_PATH=spec/support/jasmine.json"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jasmine": "^2.5.3",
-    "jasmine-node": "^1.14.5"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.23.0",
-    "babel-preset-env": "^1.2.1"
+    "jasmine": "^2.5.3"
   }
 }
