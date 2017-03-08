@@ -5,10 +5,12 @@ class App {
   }
 
   start(){
-    var server = new ServerModule.Server();
+    let server = new ServerModule.Server();
     server.start();
   }
 }
 
-var myApp = new App();
+let myApp = new App();
 myApp.start();
+
+module.exports.App = App;
