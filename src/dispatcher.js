@@ -12,7 +12,7 @@ class Dispatcher {
   }
 
   dispatch(request){
-    var controllerName, actionName;
+    let controllerName, actionName;
     [controllerName, actionName] = this.routes[request.route].split('#');
     this.controllers[controllerName][actionName](request.parameters);
   }

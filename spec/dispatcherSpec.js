@@ -1,16 +1,27 @@
-describe('dispatcher', () => {
+const DispatcherModule = require('../src/dispatcher');
+
+describe('Dispatcher', () => {
   beforeEach(() => {
-    var routes = {
-      '/': 'home#root',
-      '/home': 'home#index',
-      '1': 'students#new',
-      '/students': 'students#create',
-      '2': 'students#index',
+    const routes = {
+      '/': 'homeController#root',
+      '/home': 'homeController#index',
+      '1': 'studentsController#new',
+      '/students': 'studentsController#create',
+      '2': 'studentsController#index',
     };
-    this.dispatcher = new Dispatcher(routes);
+    this.dispatcher = new DispatcherModule.Dispatcher(routes, null);
   });
 
-  it('#dispatch should send request to the root page', () => {
-    expect(this.dispatcher.dispatch('1')).toBe('students#new');
+  it('#constructor should init this.controllers', () => {
+    expect(this.dispatcher.controllers).toBeDefined();
+  });
+
+  it('#dispatch should dispatch request to the corresponding controller action', () => {
+    let params = {};
+    spyOn(this.dispatcher.controllers.homeController, 'root');
+
+    this.dispatcher.dispatch({route: '/', parameters: params});
+
+    expect(this.dispatcher.controllers.homeController.root).toHaveBeenCalledWith(params);
   });
 });
