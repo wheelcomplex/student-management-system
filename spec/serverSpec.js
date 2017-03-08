@@ -1,8 +1,24 @@
-describe('server', () => {
+const ServerModule = require('../src/server');
+const DispatcherModule = require('../src/dispatcher');
+
+describe('Server', () => {
   beforeEach(() => {
-    this.server = new Server();
+    this.server = new ServerModule.Server();
   });
 
-  it('#start should request root page ', () => {
+  it('#constructor should init this.dispatcher', () => {
+    expect(this.server.dispatcher).toEqual(jasmine.any(DispatcherModule.Dispatcher));
+  });
+
+  it('#constructor should init this.studentsDB', () => {
+    expect(this.server.studentsDB).toEqual([]);
+  });
+
+  it('#start should, by default, send request to homeController#root page', () => {
+    spyOn(this.server.dispatcher, 'dispatch');
+
+    this.server.start();
+
+    expect(this.server.dispatcher.dispatch).toHaveBeenCalledWith({route: '/', parameters: {}});
   });
 });
