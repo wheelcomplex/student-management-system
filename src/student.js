@@ -16,7 +16,9 @@ class Student {
 
   static query(queryString, dataSource){
     // TODO: implement query
-    return dataSource;
+    return dataSource.filter((student) => {
+      return queryString.split(', ').includes(student.studentNum);
+    });
   }
 }
 
