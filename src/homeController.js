@@ -1,0 +1,66 @@
+class HomeController {
+  constructor(dispatcher){
+    this.dispatcher = dispatcher;
+  }
+
+  root(parameters){
+    var response = `
+1. 添加学生
+2. 生成成绩单
+请输入你的选择（1～2）：
+    `;
+    rl.question(response, (routeName) => {
+      rl.close();
+
+      if (validateInputForRootPage(routeName)) {
+        this.dispatcher.dispatch({
+          route: routeName,
+          parameters: {}
+        });
+      } else {
+        this.dispatcher.dispatch({
+          route: '/',
+          parameters: {}
+        });
+      }
+    });
+  }
+
+  index(parameters){
+    var response = `
+1. 添加学生
+2. 生成成绩单
+3. 退出
+请输入你的选择（1～3）：
+    `;
+    rl.question(response, (routeName) => {
+      rl.close();
+
+      this.dispatcher.dispatch({
+        route: routeName,
+        parameters: {}
+      });
+      if (validateInputForHomePage(routeName)) {
+        this.dispatcher.dispatch({
+          route: routeName,
+          parameters: {}
+        });
+      } else {
+        this.dispatcher.dispatch({
+          route: '/home',
+          parameters: {}
+        });
+      }
+    });
+  }
+
+  validateInputForRootPage(routeName) {
+    /^[12]$/.test(routeName);
+  }
+
+  validateInputForHomePage(routeName) {
+    /^[123]$/.test(routeName);
+  }
+}
+
+module.exports.HomeController = HomeController;
