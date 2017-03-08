@@ -30,7 +30,7 @@ class HomeController {
 2. 生成成绩单
 3. 退出
 请输入你的选择（1～3）：
-    `;
+`;
     rlModule.rl.question(response, (routeName) => {
       if (this.validateInputForHomePage(routeName)) {
         this.dispatcher.dispatch({
