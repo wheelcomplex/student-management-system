@@ -17,7 +17,7 @@ class Student {
   }
 
   save(){
-    studentsDB.puxsh(this);
+    studentsDB.push(this);
   }
 
   averageScore(){
