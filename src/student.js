@@ -70,7 +70,9 @@ class Student {
 
     return students.map((student) => {
       return student.totalScore();
-    }).sort()[Math.round(students.length / 2) - 1];
+    }).sort((left, right) => {
+      return left - right;
+    })[Math.round(students.length / 2) - 1];
   }
 }
 

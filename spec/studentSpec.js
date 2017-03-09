@@ -44,7 +44,8 @@ describe('Student', () => {
   it('.medianOfTotalScoreSum should return the median of the sum of the total score of selected students', () => {
     const students = [
       StudentModule.Student.initStudentFromString('张三, 13, 满, 软件二班, 语文: 100, 数学: 30, 英语: 90, 编程: 60'),
-      StudentModule.Student.initStudentFromString('李四, 02, 汉, 计算机一班, 语文: 80, 数学: 90, 英语: 70, 编程: 90')
+      StudentModule.Student.initStudentFromString('李四, 02, 汉, 计算机一班, 语文: 80, 数学: 90, 英语: 70, 编程: 90'),
+      StudentModule.Student.initStudentFromString('李四, 02, 汉, 计算机一班, 语文: 1, 数学: 1, 英语: 0, 编程: 1')
     ];
     const expectedMedianOfTotalScoreSum = 280;
 
