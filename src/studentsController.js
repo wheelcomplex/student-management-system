@@ -70,6 +70,16 @@ class StudentsController {
       return parameters.split(', ').includes(student.studentNum);
     });
 
+    const averageOfTotalScoreSum = students.map((student) => {
+      return student.totalScore();
+    }).reduce((totalScoreSum, totalScore) => {
+      return totalScoreSum + totalScore;
+    }, 0) / students.length;
+
+    const medianOfTotalScoreSum = students.map((student) => {
+      return student.totalScore();
+    }).sort()[Math.round(students.length / 2) - 1];
+
     const response = `成绩单
 姓名|数学|语文|英语|编程|平均分|总分 
 ========================
@@ -77,8 +87,8 @@ ${students.map((student) => {
       return `${student.name}|${student.mathScore}|${student.mandarinScore}|${student.englishScore}|${student.programmingScore}|${student.averageScore().toFixed(1)}|${student.totalScore().toFixed(0)}`;
     })}
 ========================
-全班总分平均数：xxx
-全班总分中位数：xxx`;
+全班总分平均数：${averageOfTotalScoreSum}
+全班总分中位数：${medianOfTotalScoreSum}`;
 
     console.log(response);
 
