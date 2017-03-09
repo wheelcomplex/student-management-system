@@ -73,8 +73,9 @@ class StudentsController {
     const response = `成绩单
 姓名|数学|语文|英语|编程|平均分|总分 
 ========================
-{students[0].name}|75|95|80|80|82.5|330
-李四|85|80|70|90|81.25|325
+${students.map((student) => {
+      return `${student.name}|${student.mathScore}|${student.mandarinScore}|${student.englishScore}|${student.programmingScore}|${student.averageScore().toFixed(1)}|${student.totalScore().toFixed(0)}`;
+    })}
 ========================
 全班总分平均数：xxx
 全班总分中位数：xxx`;

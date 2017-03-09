@@ -167,18 +167,18 @@ describe('StudentsController', () => {
   });
 
   it('#index should render the right response', () => {
+    const students = [StudentModule.Student.initStudentFromString('李四, 02, 汉, 计算机一班, 语文: 80, 数学: 90, 英语: 70, 编程: 90')];
     const expectedResponse = `成绩单
 姓名|数学|语文|英语|编程|平均分|总分 
 ========================
-{students[0].name}|75|95|80|80|82.5|330
-李四|85|80|70|90|81.25|325
+李四|90|80|70|90|82.5|330
 ========================
 全班总分平均数：xxx
 全班总分中位数：xxx`;
 
     spyOn(console, 'log');
     spyOn(this.studentsController.dispatcher.server.studentsDB, 'filter').and.callFake(() => {
-      return [];
+      return students;
     });
     spyOn(this.studentsController.dispatcher, 'dispatch');
 

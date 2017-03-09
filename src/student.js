@@ -13,6 +13,14 @@ class Student {
     this.programming = programming;
     this.programmingScore = programmingScore;
   }
+
+  averageScore(){
+    return (this.totalScore() / 4);
+  }
+
+  totalScore(){
+    return (Number(this.mandarinScore) + Number(this.mathScore) + Number(this.englishScore) + Number(this.programmingScore));
+  }
   
   static validateStudentString(studentString){
     const re = /^[\u4e00-\u9fa5]{1,4}, [0-9]{2}, [\u4e00-\u9fa5], [\u4e00-\u9fa5]{1,10}, [\u4e00-\u9fa5]{1,10}: [0-9]{1,3}, [\u4e00-\u9fa5]{1,10}: [0-9]{1,3}, [\u4e00-\u9fa5]{1,10}: [0-9]{1,3}, [\u4e00-\u9fa5]{1,10}: [0-9]{1,3}$/;
