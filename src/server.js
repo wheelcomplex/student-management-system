@@ -12,7 +12,6 @@ class Server {
       '/students': 'studentsController#index',
     };
     this.dispatcher = new DispatcherModule.Dispatcher(routes, this);
-    this.studentsDB = [];
   }
 
   start(){

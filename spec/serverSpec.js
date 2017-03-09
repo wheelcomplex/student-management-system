@@ -10,10 +10,6 @@ describe('Server', () => {
     expect(this.server.dispatcher).toEqual(jasmine.any(DispatcherModule.Dispatcher));
   });
 
-  it('#constructor should init this.studentsDB', () => {
-    expect(this.server.studentsDB).toEqual([]);
-  });
-
   it('#start should, by default, send request to homeController#root page', () => {
     spyOn(this.server.dispatcher, 'dispatch');
 

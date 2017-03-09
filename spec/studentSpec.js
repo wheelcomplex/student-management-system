@@ -30,4 +30,24 @@ describe('Student', () => {
 
     expect(student.totalScore()).toEqual(310);
   });
+
+  it('.averageOfTotalScoreSum should calculate the average of the sum of the total score of selected students', () => {
+    const students = [
+      StudentModule.Student.initStudentFromString('张三, 13, 满, 软件二班, 语文: 100, 数学: 30, 英语: 90, 编程: 60'),
+      StudentModule.Student.initStudentFromString('李四, 02, 汉, 计算机一班, 语文: 80, 数学: 90, 英语: 70, 编程: 90')
+    ];
+    const expectedAverageOfTotalScoreSum = 305;
+
+    expect(StudentModule.Student.averageOfTotalScoreSum(students)).toEqual(expectedAverageOfTotalScoreSum);
+  })
+
+  it('.medianOfTotalScoreSum should return the median of the sum of the total score of selected students', () => {
+    const students = [
+      StudentModule.Student.initStudentFromString('张三, 13, 满, 软件二班, 语文: 100, 数学: 30, 英语: 90, 编程: 60'),
+      StudentModule.Student.initStudentFromString('李四, 02, 汉, 计算机一班, 语文: 80, 数学: 90, 英语: 70, 编程: 90')
+    ];
+    const expectedMedianOfTotalScoreSum = 280;
+
+    expect(StudentModule.Student.medianOfTotalScoreSum(students)).toEqual(expectedMedianOfTotalScoreSum);
+  })
 });

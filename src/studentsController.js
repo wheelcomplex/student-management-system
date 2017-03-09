@@ -31,7 +31,7 @@ class StudentsController {
 
   create(parameters){
     let student = StudentModule.Student.initStudentFromString(parameters);
-    this.dispatcher.server.studentsDB.push(student);
+    student.save();
 
     const response = `学生${student.name}的成绩被添加
 `;
@@ -66,19 +66,7 @@ class StudentsController {
   }
 
   index(parameters){
-    let students = this.dispatcher.server.studentsDB.filter((student) => {
-      return parameters.split(', ').includes(student.studentNum);
-    });
-
-    const averageOfTotalScoreSum = students.map((student) => {
-      return student.totalScore();
-    }).reduce((totalScoreSum, totalScore) => {
-      return totalScoreSum + totalScore;
-    }, 0) / students.length;
-
-    const medianOfTotalScoreSum = students.map((student) => {
-      return student.totalScore();
-    }).sort()[Math.round(students.length / 2) - 1];
+    let students = StudentModule.Student.query(parameters);
 
     const response = `成绩单
 姓名|数学|语文|英语|编程|平均分|总分 
@@ -89,8 +77,8 @@ ${students.map((student) => {
       return `${studentEntries}${studentEntry}
 `;
     }, '')}========================
-全班总分平均数：${averageOfTotalScoreSum}
-全班总分中位数：${medianOfTotalScoreSum}`;
+全班总分平均数：${StudentModule.Student.averageOfTotalScoreSum(students)}
+全班总分中位数：${StudentModule.Student.medianOfTotalScoreSum(students)}`;
 
     console.log(response);
 

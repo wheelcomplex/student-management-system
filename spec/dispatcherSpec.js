@@ -9,7 +9,7 @@ describe('Dispatcher', () => {
       '/students': 'studentsController#create',
       '2': 'studentsController#index',
     };
-    this.dispatcher = new DispatcherModule.Dispatcher(routes, null);
+    this.dispatcher = new DispatcherModule.Dispatcher(routes);
   });
 
   it('#constructor should init this.controllers', () => {
