@@ -2,9 +2,15 @@ const StudentModule = require('../src/student');
 
 describe('Student', () => {
   it('.validateStudentString should validate student string', () => {
-    const studentString = '李四, 02, 汉, 01, 语文: 80, 数学: 90, 英语: 70';
+    const studentString = '李四, 02, 汉, 计算机一班, 语文: 80, 数学: 90, 英语: 70, 编程: 70';
 
     expect(StudentModule.Student.validateStudentString(studentString)).toEqual(true);
+  });
+
+  it('#parseStudentFromString should parse student from string', () => {
+    const studentString = '李四, 02, 汉, 计算机一班, 语文: 80, 数学: 90, 英语: 70, 编程: 70';
+
+    expect(StudentModule.Student.initStudentFromString(studentString)).toEqual(jasmine.any(StudentModule.Student));
   });
 
   it('.validateQueryString should validate query string', () => {
