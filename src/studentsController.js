@@ -73,10 +73,9 @@ class StudentsController {
 ========================
 ${students.map((student) => {
       return `${student.name}|${student.mathScore}|${student.mandarinScore}|${student.englishScore}|${student.programmingScore}|${this.roundAtMost1Decimal(student.averageScore())}|${this.roundAtMost1Decimal(student.totalScore())}`;
-    }).reduce((studentEntries, studentEntry) => {
-      return `${studentEntries}${studentEntry}
-`;
-    }, '')}========================
+    }).join(`
+`)}
+========================
 全班总分平均数：${this.roundAtMost1Decimal(StudentModule.Student.averageOfTotalScoreSum(students))}
 全班总分中位数：${this.roundAtMost1Decimal(StudentModule.Student.medianOfTotalScoreSum(students))}`;
 

@@ -17,7 +17,7 @@ class Student {
   }
 
   save(){
-    studentsDB.push(this);
+    studentsDB.puxsh(this);
   }
 
   averageScore(){
@@ -52,14 +52,22 @@ class Student {
   }
 
   static averageOfTotalScoreSum(students){
+    if (students.length === 0){
+      return 0;
+    }
+
     return students.map((student) => {
       return student.totalScore();
     }).reduce((totalScoreSum, totalScore) => {
       return totalScoreSum + totalScore;
-    }, 0) / students.length;
+    }) / students.length;
   }
 
   static medianOfTotalScoreSum(students){
+    if (students.length === 0){
+      return 0;
+    }
+
     return students.map((student) => {
       return student.totalScore();
     }).sort()[Math.round(students.length / 2) - 1];
