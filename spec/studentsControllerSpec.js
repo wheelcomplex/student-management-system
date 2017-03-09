@@ -7,16 +7,14 @@ describe('StudentsController', () => {
     const dispatcher = {
       dispatch: () => {},
       server: {
-        studentsDB: {
-          push: () => {}
-        }
+        studentsDB: []
       }
     };
     this.studentsController = new StudentsControllerModule.StudentsController(dispatcher);
   });
 
   it('#newStudent should render the right response for the newStudent page', () => {
-    var expectedResponse = `请输入学生信息（格式：姓名, 学号, 民族, 班级, 学科: 成绩, ...），按回车提交：
+    const expectedResponse = `请输入学生信息（格式：姓名, 学号, 民族, 班级, 学科: 成绩, ...），按回车提交：
 `;
 
     spyOn(rlModule.rl, 'question');
@@ -179,7 +177,7 @@ describe('StudentsController', () => {
 全班总分中位数：xxx`;
 
     spyOn(console, 'log');
-    spyOn(StudentModule.Student, 'query').and.callFake(() => {
+    spyOn(this.studentsController.dispatcher.server.studentsDB, 'filter').and.callFake(() => {
       return [];
     });
     spyOn(this.studentsController.dispatcher, 'dispatch');
@@ -191,7 +189,7 @@ describe('StudentsController', () => {
 
   it('#index should dispatch a request to the home index page', () => {
     spyOn(console, 'log');
-    spyOn(StudentModule.Student, 'query').and.callFake(() => {
+    spyOn(this.studentsController.dispatcher.server.studentsDB, 'filter').and.callFake(() => {
       return [];
     });
     spyOn(this.studentsController.dispatcher, 'dispatch');

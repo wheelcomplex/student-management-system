@@ -66,7 +66,9 @@ class StudentsController {
   }
 
   index(parameters){
-    let students = StudentModule.Student.query(parameters, this.dispatcher.server.studentsDB);
+    let students = this.dispatcher.server.studentsDB.filter((student) => {
+      return parameters.split(', ').includes(student.studentNum);
+    });
 
     const response = `成绩单
 姓名|数学|语文|英语|编程|平均分|总分 

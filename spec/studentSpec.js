@@ -18,22 +18,4 @@ describe('Student', () => {
 
     expect(StudentModule.Student.validateQueryString(queryString)).toEqual(true);
   });
-
-  it('#query should query students', () => {
-    const queryString = '1, 2, 3';
-    const dataSource = [{
-      studentNum: '1'
-    },{
-      studentNum: '3'
-    },{
-      studentNum: '4'
-    }];
-    const expectedResult = [{
-      studentNum: '1'
-    },{
-      studentNum: '3'
-    }];
-
-    expect(StudentModule.Student.query(queryString, dataSource)).toEqual(expectedResult);
-  });
 });
