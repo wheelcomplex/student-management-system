@@ -85,8 +85,10 @@ class StudentsController {
 ========================
 ${students.map((student) => {
       return `${student.name}|${student.mathScore}|${student.mandarinScore}|${student.englishScore}|${student.programmingScore}|${student.averageScore().toFixed(1)}|${student.totalScore().toFixed(0)}`;
-    })}
-========================
+    }).reduce((studentEntries, studentEntry) => {
+      return `${studentEntries}${studentEntry}
+`;
+    }, '')}========================
 全班总分平均数：${averageOfTotalScoreSum}
 全班总分中位数：${medianOfTotalScoreSum}`;
 
