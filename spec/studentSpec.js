@@ -39,7 +39,7 @@ describe('Student', () => {
     const expectedAverageOfTotalScoreSum = 305;
 
     expect(StudentModule.Student.averageOfTotalScoreSum(students)).toEqual(expectedAverageOfTotalScoreSum);
-  })
+  });
 
   it('.medianOfTotalScoreSum should return the median of the sum of the total score of selected students', () => {
     const students = [
@@ -49,5 +49,5 @@ describe('Student', () => {
     const expectedMedianOfTotalScoreSum = 280;
 
     expect(StudentModule.Student.medianOfTotalScoreSum(students)).toEqual(expectedMedianOfTotalScoreSum);
-  })
+  });
 });
