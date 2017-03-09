@@ -4,8 +4,13 @@ const rlModule = require('../src/io');
 
 describe('StudentsController', () => {
   beforeEach(() => {
-    var dispatcher = {
-      dispatch: () => {}
+    const dispatcher = {
+      dispatch: () => {},
+      server: {
+        studentsDB: {
+          push: () => {}
+        }
+      }
     };
     this.studentsController = new StudentsControllerModule.StudentsController(dispatcher);
   });
@@ -22,7 +27,7 @@ describe('StudentsController', () => {
   });
 
   it('#newStudent should dispatch a request to the corresponding page when user input is valid', () => {
-    var studentString = {};
+    const studentString = {};
 
     spyOn(StudentModule.Student, 'validateStudentString').and.callFake(() => {
       return true;
@@ -43,7 +48,7 @@ describe('StudentsController', () => {
   });
 
   it('#newStudent should dispatch a request to the newStudent page when user input is invalid', () => {
-    var studentString = {};
+    const studentString = {};
 
     spyOn(StudentModule.Student, 'validateStudentString').and.callFake(() => {
       return false;
@@ -64,13 +69,16 @@ describe('StudentsController', () => {
   });
 
   it('#create should render the right response', () => {
-    const expectedResponse = `学生{student.name}的成绩被添加
+    const studentName = 'Mike';
+    const expectedResponse = `学生${studentName}的成绩被添加
 `;
     spyOn(console, 'log');
-    spyOn(StudentModule.Student, 'constructor').and.callFake(() => {
-      return {};
+    spyOn(StudentModule.Student, 'initStudentFromString').and.callFake(() => {
+      return {
+        name: studentName
+      };
     });
-    spyOn(this.dispatcher.server.studentsDB, 'push');
+    spyOn(this.studentsController.dispatcher.server.studentsDB, 'push');
     spyOn(this.studentsController.dispatcher, 'dispatch');
 
     this.studentsController.create({});
@@ -80,23 +88,23 @@ describe('StudentsController', () => {
 
   it('#create should push a new student to studentsDB', () => {
     spyOn(console, 'log');
-    spyOn(StudentModule.Student, 'constructor').and.callFake(() => {
+    spyOn(StudentModule.Student, 'initStudentFromString').and.callFake(() => {
       return {};
     });
-    spyOn(this.dispatcher.server.studentsDB, 'push');
+    spyOn(this.studentsController.dispatcher.server.studentsDB, 'push');
     spyOn(this.studentsController.dispatcher, 'dispatch');
 
     this.studentsController.create({});
 
-    expect(this.dispatcher.server.studentsDB.push).toHaveBeenCalled();
+    expect(this.studentsController.dispatcher.server.studentsDB.push).toHaveBeenCalled();
   });
 
   it('#create should dispatch a request to the home index page', () => {
     spyOn(console, 'log');
-    spyOn(StudentModule.Student, 'constructor').and.callFake(() => {
+    spyOn(StudentModule.Student, 'initStudentFromString').and.callFake(() => {
       return {};
     });
-    spyOn(this.dispatcher.server.studentsDB, 'push');
+    spyOn(this.studentsController.dispatcher.server.studentsDB, 'push');
     spyOn(this.studentsController.dispatcher, 'dispatch');
 
     this.studentsController.create({});
@@ -108,7 +116,7 @@ describe('StudentsController', () => {
   });
   
   it('#query should render the right response for the query page', () => {
-    var expectedResponse = `请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：
+    const expectedResponse = `请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：
 `;
 
     spyOn(rlModule.rl, 'question');
@@ -119,7 +127,7 @@ describe('StudentsController', () => {
   });
 
   it('#query should dispatch a request to the corresponding page when user input is valid', () => {
-    var studentString = {};
+    const studentString = {};
 
     spyOn(StudentModule.Student, 'validateQueryString').and.callFake(() => {
       return true;
@@ -140,7 +148,7 @@ describe('StudentsController', () => {
   });
 
   it('#query should dispatch a request to the query page when user input is invalid', () => {
-    var studentString = {};
+    const studentString = {};
 
     spyOn(StudentModule.Student, 'validateQueryString').and.callFake(() => {
       return false;
@@ -159,13 +167,6 @@ describe('StudentsController', () => {
       parameters: {displayErrorMessage: true}
     });
   });
-
-  xit('GET #index should handle request to the students index page', () => {
-  });
-
-
-
-
 
   it('#index should render the right response', () => {
     const expectedResponse = `成绩单
@@ -190,7 +191,7 @@ describe('StudentsController', () => {
 
   it('#index should dispatch a request to the home index page', () => {
     spyOn(console, 'log');
-    spyOn(StudentModule.Student, 'constructor').and.callFake(() => {
+    spyOn(StudentModule.Student, 'query').and.callFake(() => {
       return [];
     });
     spyOn(this.studentsController.dispatcher, 'dispatch');
