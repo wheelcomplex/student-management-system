@@ -15,7 +15,6 @@ class Student {
   }
   
   static validateStudentString(studentString){
-    // TODO: implement regex
     const re = /^[\u4e00-\u9fa5]{1,4}, [0-9]{2}, [\u4e00-\u9fa5], [\u4e00-\u9fa5]{1,10}, [\u4e00-\u9fa5]{1,10}: [0-9]{1,3}, [\u4e00-\u9fa5]{1,10}: [0-9]{1,3}, [\u4e00-\u9fa5]{1,10}: [0-9]{1,3}, [\u4e00-\u9fa5]{1,10}: [0-9]{1,3}$/;
     return re.test(studentString);
   }
@@ -28,12 +27,11 @@ class Student {
   }
 
   static validateQueryString(queryString){
-    // TODO: implement regex
-    return true;
+    const re = /^[0-9]{2}(, [0-9]{2})*$/;
+    return re.test(queryString);
   }
 
   static query(queryString, dataSource){
-    // TODO: implement query
     return dataSource.filter((student) => {
       return queryString.split(', ').includes(student.studentNum);
     });
