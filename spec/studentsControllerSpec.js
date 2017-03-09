@@ -182,7 +182,7 @@ describe('StudentsController', () => {
     const expectedResponse = `成绩单
 姓名|数学|语文|英语|编程|平均分|总分 
 ========================
-张三|30|100|90|60|70.0|280
+张三|30|100|90|60|70|280
 李四|90|80|70|90|82.5|330
 ========================
 全班总分平均数：305
@@ -212,5 +212,13 @@ describe('StudentsController', () => {
       route: '/home',
       parameters: {}
     });
+  });
+
+  it('#roundAtMost1Decimal should round a number to 1 decimal when many dicimals ', () =>{
+    expect(this.studentsController.roundAtMost1Decimal(19.23412341)).toEqual('19.2');
+  });
+
+  it('#roundAtMost1Decimal should round a number to 0 dicimal when integer', () =>{
+    expect(this.studentsController.roundAtMost1Decimal(19)).toEqual('19');
   });
 });
