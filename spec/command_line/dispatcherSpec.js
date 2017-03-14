@@ -1,4 +1,4 @@
-const DispatcherModule = require('../src/dispatcher');
+const DispatcherModule = require('../../src/command_line/dispatcher');
 
 describe('Dispatcher', () => {
   beforeEach(() => {

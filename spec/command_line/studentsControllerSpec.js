@@ -1,6 +1,6 @@
-const StudentsControllerModule = require('../src/studentsController');
-const StudentModule = require('../src/student');
-const rlModule = require('../src/io');
+const StudentsControllerModule = require('../../src/command_line/studentsController');
+const StudentModule = require('../../src/command_line/student');
+const rlModule = require('../../src/command_line/io');
 
 describe('StudentsController', () => {
   beforeEach(() => {

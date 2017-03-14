@@ -1,5 +1,5 @@
-const HomeControllerModule = require('../src/homeController');
-const rlModule = require('../src/io');
+const HomeControllerModule = require('../../src/command_line/homeController');
+const rlModule = require('../../src/command_line/io');
 
 describe('HomeController', () => {
   beforeEach(() => {

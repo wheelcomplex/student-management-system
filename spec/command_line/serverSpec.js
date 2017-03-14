@@ -1,5 +1,5 @@
-const ServerModule = require('../src/server');
-const DispatcherModule = require('../src/dispatcher');
+const ServerModule = require('../../src/command_line/server');
+const DispatcherModule = require('../../src/command_line/dispatcher');
 
 describe('Server', () => {
   beforeEach(() => {
