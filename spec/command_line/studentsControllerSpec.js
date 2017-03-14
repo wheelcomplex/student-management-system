@@ -1,5 +1,5 @@
 const StudentsControllerModule = require('../../src/command_line/studentsController');
-const StudentModule = require('../../src/command_line/student');
+const StudentModule = require('../../lib/student');
 const rlModule = require('../../src/command_line/io');
 
 describe('StudentsController', () => {

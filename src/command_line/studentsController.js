@@ -1,5 +1,5 @@
 const rlModule = require('./io');
-const StudentModule = require('./student');
+const StudentModule = require('./../../lib/student');
 
 class StudentsController {
   constructor(dispatcher){

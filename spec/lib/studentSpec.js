@@ -1,4 +1,4 @@
-const StudentModule = require('../../src/command_line/student');
+const StudentModule = require('../../lib/student');
 
 describe('Student', () => {
   it('.validateStudentString should validate student string', () => {
