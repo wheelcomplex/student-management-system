@@ -1,0 +1,10 @@
+<% if (displayErrorMessage) { %>
+<p>请按正确的格式输入（格式：姓名, 学号, 学科: 成绩, ...）：</p>
+<% } else { %>
+<p>请输入学生信息（格式：姓名, 学号, 民族, 班级, 学科: 成绩, ...），按Submit提交：</p>
+<% } %>
+
+<form action="/students/create" method="post">
+    <input type="text" name="student">
+    <input type="submit">
+</form>

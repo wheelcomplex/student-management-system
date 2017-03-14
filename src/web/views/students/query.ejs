@@ -1,0 +1,10 @@
+<% if (displayErrorMessage) { %>
+<p>请按正确的格式输入要打印的学生的学号（格式： 学号, 学号,...），按Submit提交：</p>
+<% } else { %>
+<p>请输入要打印的学生的学号（格式： 学号, 学号,...），按Submit提交：</p>
+<% } %>
+
+<form action="/students" method="post">
+    <input type="text" name="query">
+    <input type="submit">
+</form>
