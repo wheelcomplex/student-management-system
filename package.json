@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jasmine JASMINE_CONFIG_PATH=spec/support/jasmine.json",
-    "start": "node ./src/app.js"
+    "start": "node ./src/command_line/app.js",
+    "web": "node ./src/web/app.js"
   },
   "author": "",
   "license": "ISC",
