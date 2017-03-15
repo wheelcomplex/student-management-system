@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const StudentModule = require('../../lib/student');
-const roundAtMost1DecimalModule = require('../../lib/roundAtMost1Decimal');
+const RoundAtMost1DecimalModule = require('../../lib/roundAtMost1Decimal');
 
 let app = express();
 app.set('view engine', 'ejs');
@@ -45,7 +45,7 @@ app.post('/students', (req, res) => {
   if(StudentModule.Student.validateQueryString(req.body.query)){
     let students = StudentModule.Student.query(req.body.query);
 
-    res.render('students/index', {students: students, roundAtMost1Decimal: roundAtMost1DecimalModule.roundAtMost1Decimal, Student: StudentModule.Student});
+    res.render('students/index', {students: students, roundAtMost1Decimal: RoundAtMost1DecimalModule.roundAtMost1Decimal, Student: StudentModule.Student});
   } else {
     res.redirect('/2?displayErrorMessage=true');
   }

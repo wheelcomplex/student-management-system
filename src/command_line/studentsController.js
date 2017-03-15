@@ -1,5 +1,6 @@
 const rlModule = require('./io');
 const StudentModule = require('./../../lib/student');
+const RoundAtMost1DecimalModule = require('./../../lib/roundAtMost1Decimal');
 
 class StudentsController {
   constructor(dispatcher){
@@ -72,12 +73,12 @@ class StudentsController {
 姓名|数学|语文|英语|编程|平均分|总分 
 ========================
 ${students.map((student) => {
-      return `${student.name}|${student.mathScore}|${student.mandarinScore}|${student.englishScore}|${student.programmingScore}|${this.roundAtMost1Decimal(student.averageScore())}|${this.roundAtMost1Decimal(student.totalScore())}`;
+      return `${student.name}|${student.mathScore}|${student.mandarinScore}|${student.englishScore}|${student.programmingScore}|${RoundAtMost1DecimalModule.roundAtMost1Decimal(student.averageScore())}|${RoundAtMost1DecimalModule.roundAtMost1Decimal(student.totalScore())}`;
     }).join(`
 `)}
 ========================
-全班总分平均数：${this.roundAtMost1Decimal(StudentModule.Student.averageOfTotalScoreSum(students))}
-全班总分中位数：${this.roundAtMost1Decimal(StudentModule.Student.medianOfTotalScoreSum(students))}`;
+全班总分平均数：${RoundAtMost1DecimalModule.roundAtMost1Decimal(StudentModule.Student.averageOfTotalScoreSum(students))}
+全班总分中位数：${RoundAtMost1DecimalModule.roundAtMost1Decimal(StudentModule.Student.medianOfTotalScoreSum(students))}`;
 
     console.log(response);
 
@@ -85,10 +86,6 @@ ${students.map((student) => {
       route: '/home',
       parameters: {}
     });
-  }
-
-  roundAtMost1Decimal(number){
-    return (Math.round(number * 10) / 10).toString();
   }
 }
 
