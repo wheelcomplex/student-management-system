@@ -1,8 +1,35 @@
+<script src="/assets/javascript/ejs.js"></script>
+<script src="/assets/javascript/ejs-browser-async.js"></script>
+
+<h1>如何在浏览器里渲染Ejs模版</h1>
+
+<h2>使用说明</h2>
 <ol>
-    <li>
-        <a href="/1">添加学生</a>
-    </li>
-    <li>
-        <a href="/2">生成成绩单</a>
-    </li>
+    <li>下载Ejs的浏览器版本，<a href="https://github.com/mde/ejs/releases/download/v2.5.6/ejs.js">点击下载</a>.</li>
+    <li>把下载好的ejs.js文件存放在public目录.</li>
+    <li>npm install ejs-browser-async --save</li>
+    <li>把/node_modules/ejs-browser-async/目录下的ejs-browser-async.js拷贝到public目录下.</li>
+    <li>通过script标签在你的HTML页面中载入ejs.js和ejs-browser-async.js文件.</li>
+    <li>把你希望在浏览器里使用的Ejs模版存放在public目录</li>
+    <li>使用<a href="https://www.npmjs.com/package/ejs-browser-async#ejsrenderasyncpath-data-callback">这里说明的语法</a>来在浏览器里渲染你存放在public目录下的Ejs模版.</li>
 </ol>
+
+<h2>实例</h2>
+<div id="my-view"></div>
+<p>记得打开浏览器控制台查看此实例的源代码。</p>
+
+<script>
+  const myViewModel = {
+    name: 'Ejs templated rendered in browser'
+  }
+  ejs.renderAsync(
+    './views/example.ejs',
+    {
+      myViewModel: myViewModel
+    },
+    function (_, rendered) {
+      let el = document.getElementById('my-view');
+      el.innerHTML = rendered;
+    }
+  );
+</script>
