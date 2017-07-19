@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Launch Program",
             "console": "externalTerminal",
-            "program": "${workspaceRoot}/src/app.js",
+            "program": "${workspaceRoot}/src/command_line/app.js",
             "cwd": "${workspaceRoot}"
         },
         {
