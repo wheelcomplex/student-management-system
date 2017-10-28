@@ -19,17 +19,16 @@
 <p>记得打开浏览器控制台查看此实例的源代码。</p>
 
 <script>
-  const myViewModel = {
-    name: 'Ejs templated rendered in browser'
-  }
-  ejs.renderAsync(
-    './views/example.ejs',
-    {
-      myViewModel: myViewModel
-    },
-    function (_, rendered) {
-      let el = document.getElementById('my-view');
-      el.innerHTML = rendered;
+    const data = {
+        name: 'Ejs templated rendered in browser'
     }
-  );
+    ejs.renderAsync(
+        './views/example.ejs', {
+            name: data.name
+        },
+        function(_, rendered) {
+            let el = document.getElementById('my-view');
+            el.innerHTML = rendered;
+        }
+    );
 </script>
